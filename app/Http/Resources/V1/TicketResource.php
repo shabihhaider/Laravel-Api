@@ -20,7 +20,10 @@ class TicketResource extends JsonResource
             'id' => $this->id,
             'attributes' => [
                 'title' => $this->title,
-                'description' => $this->description,
+                'description' => $this->when(
+                    $request->routeIs('tickets.show'),  // Condition when description must show
+                    $this->description
+                ),
                 'status' => $this->status,
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at
@@ -36,9 +39,16 @@ class TicketResource extends JsonResource
                     ]
                 ]
             ],
+            'includes' => [
+                new UserResource($this->user),
+            ],
             'links' => [
                 ['self' => route('tickets.show', ['ticket' => $this->id])]
             ]
         ];
     }
 }
+
+// Make User resource, model, controller, requests
+// php artisan make:controller Api\V1\UserController --resource --model=User --requests
+// php artisan make:resource V1\UserResource
