@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 // http:localhost:500/api/v2/tickets ...
 
 // Make the controller for Ticket Model and also make requests (php artisan make:controller Api\V1\TicketController --resource --model=Ticket --requests)
-Route::apiResource('tickets', TicketController::class);
+Route::middleware('auth:sanctum')->apiResource('tickets', TicketController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
