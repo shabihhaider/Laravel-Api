@@ -29,6 +29,10 @@ class UserResource extends JsonResource
                         'updatedAt' => $this->updated_at,
                     ]
                 )
+            ],
+            'includes' => TicketResource::collection($this->whenLoaded('tickets')), // Load the tickets relationship when it is included otherwise it will completely omit the tickets relationship and display only the user resource
+            'links' => [
+                'self' => route('users.show', ['user' => $this->id])
             ]
         ];
     }

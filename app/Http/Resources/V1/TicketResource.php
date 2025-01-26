@@ -35,15 +35,14 @@ class TicketResource extends JsonResource
                         'id' => $this->user_id
                     ],
                     'links' => [
-                        ['self' => 'todo']
+                        'self' => route('users.show', ['user' => $this->user_id])
                     ]
                 ]
             ],
-            'includes' => [
-                new UserResource($this->user),
-            ],
+            // Make it optional
+            'includes' => new UserResource($this->whenLoaded('user')), // Load the user relationship when it is included otherwise it will completely omit the user relationship and display only the ticket resource (http://127.0.0.1:8000/api/v1/tickets/1?include=author)
             'links' => [
-                ['self' => route('tickets.show', ['ticket' => $this->id])]
+                'self' => route('tickets.show', ['ticket' => $this->id])
             ]
         ];
     }
