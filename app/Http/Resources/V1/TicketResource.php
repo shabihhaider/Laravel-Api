@@ -40,7 +40,7 @@ class TicketResource extends JsonResource
                 ]
             ],
             // Make it optional
-            'includes' => new UserResource($this->whenLoaded('user')), // Load the user relationship when it is included otherwise it will completely omit the user relationship and display only the ticket resource (http://127.0.0.1:8000/api/v1/tickets/1?include=author)
+            'includes' => new UserResource($this->whenLoaded('author')), // Load the user relationship when it is included otherwise it will completely omit the user relationship and display only the ticket resource (http://127.0.0.1:8000/api/v1/tickets/1?include=author)
             'links' => [
                 'self' => route('tickets.show', ['ticket' => $this->id])
             ]
