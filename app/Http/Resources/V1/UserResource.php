@@ -22,7 +22,7 @@ class UserResource extends JsonResource
                 'name' => $this->name,
                 'email' => $this->email,
                 $this->mergeWhen(
-                    $request->routeIs('users.*'), // When this condition is true then show the following information
+                    $request->routeIs('authors.*'), // When this condition is true then show the following information
                     [
                         'emailVerifiedAt' => $this->email_verified_at,
                         'createdAt' => $this->created_at,
@@ -32,7 +32,7 @@ class UserResource extends JsonResource
             ],
             'includes' => TicketResource::collection($this->whenLoaded('tickets')), // Load the tickets relationship when it is included otherwise it will completely omit the tickets relationship and display only the user resource
             'links' => [
-                'self' => route('users.show', ['user' => $this->id])
+                'self' => route('authors.show', ['author' => $this->id])
             ]
         ];
     }

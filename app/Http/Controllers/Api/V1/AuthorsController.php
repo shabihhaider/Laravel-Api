@@ -8,7 +8,7 @@ use App\Http\Resources\V1\UserResource;
 use App\Http\Requests\Api\V1\StoreUserRequest;
 use App\Http\Requests\Api\V1\UpdateUserRequest;
 
-class UserController extends ApiController // inherit from ApiController
+class AuthorsController extends ApiController // inherit from ApiController
 {
     /**
      * Display a listing of the resource.
@@ -41,15 +41,15 @@ class UserController extends ApiController // inherit from ApiController
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(User $author)
     {
         // Load the tickets relationship if it is included in the request
         if($this->include('tickets')) {
-            return new UserResource($user->load('tickets')); 
+            return new UserResource($author->load('tickets')); 
         }
 
         // otherwise, return the user resource, without the tickets relationship
-        return new UserResource($user); 
+        return new UserResource($author); 
     }
 
     /**

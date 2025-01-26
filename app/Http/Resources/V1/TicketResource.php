@@ -21,7 +21,7 @@ class TicketResource extends JsonResource
             'attributes' => [
                 'title' => $this->title,
                 'description' => $this->when(
-                    $request->routeIs('tickets.show'),  // Condition when description must show
+                    $request->routeIs('authors.show'),  // Condition when description must show
                     $this->description
                 ),
                 'status' => $this->status,
@@ -35,7 +35,7 @@ class TicketResource extends JsonResource
                         'id' => $this->user_id
                     ],
                     'links' => [
-                        'self' => route('users.show', ['user' => $this->user_id])
+                        'self' => route('authors.show', ['author' => $this->user_id])
                     ]
                 ]
             ],
