@@ -24,10 +24,15 @@ use Illuminate\Support\Facades\Route;
 // http:localhost:500/api/v2/tickets ...
 
 // Make the controller for Ticket Model and also make requests (php artisan make:controller Api\V1\TicketController --resource --model=Ticket --requests)
-Route::middleware('auth:sanctum')->apiResource('tickets', TicketController::class);
-Route::middleware('auth:sanctum')->apiResource('authors', AuthorsController::class);
-Route::middleware('auth:sanctum')->apiResource('authors.tickets', AuthorTicektsController::class); // parent-child relationship
+Route::middleware('auth:sanctum')->group(function() {
+    Route::apiResource('tickets', TicketController::class)->except('update'); // except update method means we don't want to update the ticket
+    Route::put('tickets/{ticket}', [TicketController::class, 'replace']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::apiResource('authors', AuthorsController::class);
+    Route::apiResource('authors.tickets', AuthorTicektsController::class)->except('update'); // parent-child relationship
+    Route::put('authors/{author}/tickets/{ticket}', [AuthorTicektsController::class, 'replace'] );
+
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    }); 
 });
